@@ -69,61 +69,6 @@
             dynamicLoadScript();
         });
     </script>
-    <script>
-        document.addEventListener("recaptchaLoaded", function() {
-            if (!gdprConfirmed()) {
-                return;
-            }
-            (function(grecaptcha, sitekey, actions) {
-                var recaptcha = {
-                    execute: function(action, submitFormCb) {
-                        try {
-                            grecaptcha.execute(
-                                sitekey, {
-                                    action: action
-                                }
-                            ).then(function(token) {
-                                var forms = document.getElementsByTagName('form');
-
-                                for (var i = 0; i < forms.length; i++) {
-                                    var fields = forms[i].getElementsByTagName('input');
-
-                                    for (var j = 0; j < fields.length; j++) {
-                                        var field = fields[j];
-
-                                        if ('recaptchaResponse' === field.getAttribute('name')) {
-                                            field.setAttribute('value', token);
-                                            break;
-                                        }
-                                    }
-                                }
-                                submitFormCb();
-                            });
-                        } catch (e) {
-                            var formError = document.querySelector('.u-form-send-error');
-
-                            if (formError) {
-                                formError.innerText = 'Site Owner Error: ' + e.message.replace(/:[\s\S]*/, '');
-                                formError.style.display = 'block';
-                            }
-                        }
-                    },
-
-                    executeContact: function(submitFormCb) {
-                        recaptcha.execute(actions['contact'], submitFormCb);
-                    }
-                };
-
-                window.recaptchaObject = recaptcha;
-            })(
-                grecaptcha,
-
-                '6Lc2HDEiAAAAALpe1yqNarK-BmlyYl_MNPZx7_AB', {
-                    'contact': 'contact'
-                }
-            );
-        });
-    </script>
 </head>
 
 <body data-home-page="https://ab-321.nicepage.io/home.html?version=add30034-1dba-49af-b52b-7f55429a3345" data-home-page-title="home" data-path-to-root="/" class="u-body u-overlap u-overlap-contrast u-xl-mode" data-lang="en">
